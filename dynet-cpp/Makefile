@@ -1,8 +1,12 @@
 
 
 CUDA_PATH=/usr/local/cuda/targets/x86_64-linux/lib
-EIGEN_PATH=${HOME}/usr/local/eigen
-DYNET_PATH=${HOME}/work/dynet
+#EIGEN_PATH=${HOME}/usr/local/eigen
+EIGEN_PATH=${HOME}/DyNet/eigen
+#DYNET_PATH=${HOME}/work/dynet
+DYNET_PATH=${HOME}/DyNet/dynet
+
+BOOST_PATH=${HOME}/DyNet/boost_1_66_0
 
 DYNET_LIB=-ldynet
 
@@ -12,7 +16,8 @@ ifeq ($(UNAME_S),Darwin)
   CXX_FLAGS=-std=c++11 -I${EIGEN_PATH} -I${DYNET_PATH} -L${DYNET_PATH}/build/dynet -lc++ -Ofast
 else
   CC=g++
-  CXX_FLAGS=-std=c++11 -I${EIGEN_PATH} -I${DYNET_PATH} -L${DYNET_PATH}/build/dynet -DBOOST_REGEX -lboost_regex -Ofast
+  #CXX_FLAGS=-std=c++11 -I${EIGEN_PATH} -I${DYNET_PATH} -L${DYNET_PATH}/build/dynet -DBOOST_REGEX -lboost_regex -Ofast
+  CXX_FLAGS=-std=c++11 -I${EIGEN_PATH} -I${DYNET_PATH} -L${DYNET_PATH}/build/dynet -Wl,-R${DYNET_PATH}/build/dynet -DBOOST_REGEX -I${BOOST_PATH} -L${BOOST_PATH}/stage/lib -Wl,-R${BOOST_PATH}/stage/lib -lboost_regex -Ofast
 endif
 
 # The -seq version is commented out for compatibility with master. If using the sequence-ops
